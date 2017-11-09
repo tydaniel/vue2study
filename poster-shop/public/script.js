@@ -8,7 +8,8 @@ new Vue({
 			{ id: 2, title: 'Item 2'},
 			{ id: 3, title: 'Item 3'}
 		],
-		cart: []
+		cart: [],
+		search: ''
 	},
 	methods: {
 		// addItem: function(){
@@ -58,7 +59,12 @@ new Vue({
 			}
 		},
 		onSubmit: function(){
-			console.log('Search Function here!');
+			//console.log('Search Function here!' + this.search);
+			// console.log(this.$http);
+			this.$http.get('/search/'.concat(this.search))
+			.then(function(){
+				console.log(res);
+			})
 		}
 	},
 	filters: {
