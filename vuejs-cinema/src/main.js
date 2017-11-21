@@ -29,13 +29,15 @@ new Vue({
 		}
 	},
 	components: {
+		// 影片列表
 		MovieList,
+		// 关键字过滤区
 		MovieFilter
 	},
 	created() {
 		//console.log(this.$http);
 		this.$http.get('/api').then(response => {
-			console.log(response.data);	
+			// console.log(response.data);	
 			this.movies = response.data;
 		});
 	}
