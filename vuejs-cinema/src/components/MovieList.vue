@@ -1,12 +1,26 @@
 <template>
 	<div id="movie-list">
 		<div v-if="filterMovies.length">
-			<movie-item v-for="movie in filterMovies" 
+			<!-- <movie-item v-for="movie in filterMovies" 
 			            v-bind:movie="movie.movie" 
 			            v-bind:sessions="movie.sessions" 
 						v-bind:day="day" 
 						v-bind:time="time"
-			></movie-item>
+			> -->
+			<movie-item v-for="movie in filterMovies" 
+			            v-bind:movie="movie.movie"
+			>
+				<div class="movie-sessions">
+					<div 
+					     v-for="session in filteredSessions(movie.sessions)" 
+					     class="session-time-wrapper tooltip-wrapper"
+					     v-tooltip="{ seat: session.seats }"
+					>
+						<div class="session-time">{{ formatSessionTime(session.time) }}</div>					
+					</div>
+				</div>
+
+			</movie-item>
 		</div>
 		<div v-else-if="movies.length" class="no-results">
 			{{ noResults }}
@@ -22,7 +36,7 @@
 	import times from '../util/times';
 	import MovieItem from './MovieItem.vue';	
 	export default {		
-		props: [ "genre", "time", "movies", "day" ],
+		props: [ "genre", "time", "movies", "day"],
 		methods: {
 			// 回调函数 判断 Genre是否一致
 			moviePassesGenreFilter(movie) {
@@ -50,7 +64,18 @@
 				} else {
 					return this.$moment(session.time).hour() < 18;
 				}
-			}
+			},
+			formatSessionTime(raw) {
+				// 时间显示格式化返回
+				return this.$moment(raw).format('h:mm A');
+			},
+			filteredSessions(sessions) {
+				// return sessions.filter(session => {
+				// 	return this.$moment(session.time).isSame(this.day, 'day');
+				// });
+				return sessions.filter(this.sessionPassesTimeFilter);
+
+			},
 		},
 		computed: {
 			// 显示相应的影片
