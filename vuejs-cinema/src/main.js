@@ -17,6 +17,9 @@ moment.tz.setDefault("UTC");
 Object.defineProperty(Vue.prototype, '$moment', { get() { return this.$root.moment } });
 
 // Global Event Bus
+// 用于在不同的components之间传递
+// 全局函数
+import { checkFilter } from './util/bus.js';
 const bus = new Vue();
 Object.defineProperty(Vue.prototype, '$bus', { get() { return this.$root.bus } });
 
@@ -31,17 +34,7 @@ new Vue({
 		bus
 	},
 	methods: {
-		checkFilter(category, title, checked){
-			// console.log(category, title, checked);
-			if(checked) {
-				this[category].push(title);				
-			} else {
-			    let index = this[category].indexOf(title);
-			    if(index > -1) {
-			    	this[category].splice(index, 1);
-			    } 
-			}
-		}
+		
 	},
 	components: {
 		// 影片列表
@@ -55,6 +48,12 @@ new Vue({
 			// console.log(response.data);	
 			this.movies = response.data;
 		});
+
+		// CheckFilter 组件中触发事件后， 调用Main中的hook 监听事件
+		// this.$bus.$on('check-filter', this.checkFilter);
+		this.$bus.$on('check-filter', checkFilter.bind(this));
+		// 使用了JS中的Function.prototype.bind()方法
+		// 主要作用就是将函数绑定至某个对象
 	}
 });
 
