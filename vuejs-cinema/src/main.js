@@ -35,7 +35,8 @@ new Vue({
 		movies: [],
 		moment,
 		day: moment(),
-		bus
+		bus,
+		testmessage: 'Ni hao!'
 	},
 	methods: {
 		
@@ -106,7 +107,7 @@ Vue.directive('tooltip', {
 		div.removeEventListener('mouseover', mouseOverHandler);
 		div.removeEventListener('mouseout', mouseOutHandler);
 		div.removeEventListener('touchstart', mouseOverHandler);
-		div.removeEventListener('touchend', mouseOutHandler);
+		div.removeEventListener+('touchend', mouseOutHandler);
 	}
 });
 

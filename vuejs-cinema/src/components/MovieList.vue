@@ -19,7 +19,6 @@
 						<div class="session-time">{{ formatSessionTime(session.time) }}</div>					
 					</div>
 				</div>
-
 			</movie-item>
 		</div>
 		<div v-else-if="movies.length" class="no-results">

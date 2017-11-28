@@ -13,7 +13,9 @@
 			</div>
 		</movie-item>
 		<div class="home">
-			<router-link to="{ name : 'home' }"> Back to home </router-link>
+			<!-- <router-link to="{path: '/'}"> Back to home </router-link> -->
+			<router-link :to="{name: 'home'}"> Back to home </router-link>
+			
 		</div>
 	</div>
 </template>
