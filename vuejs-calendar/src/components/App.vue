@@ -1,24 +1,54 @@
 <template>
 	<div>
-		<div v-for="week in weeks">
-			Week
-			<div v-for="day in week">{{ day }}</div>	
-		</div>		
+		<div id="header">
+			<div>
+				<h1>iCalender</h1>
+			</div>
+			<div>
+				<current-month></current-month>
+			</div>
+		</div>
+		<div id="day-bar">
+			<div>Mon</div>
+			<div>Tue</div>
+			<div>Wed</div>
+			<div>Thu</div>
+			<div>Fri</div>
+			<div>Sat</div>
+			<div>Sun</div>
+		</div>
+		<div id="calendar">
+			<div v-for="week in weeks" class="calendar-week">
+				<calendar-day v-for="day in week" :day="day"></calendar-day>
+			</div>		
+		</div>
+		<event-form></event-form>	
 	</div>
+	
 </template>
-<script>
+<script>	
+	import CalendarDay from './CalendarDay.vue';
+	import CurrentMonth from './CurrentMonth.vue';
+	import EventForm from './EventForm.vue';
+
 	export default {
-		data() {
-			return {
-				month: 2,
-				year: 2017
-			};			
-		},
+		// data() {
+		// 	return {
+		// 		month: 12,
+		// 		year: 2017
+		// 	};			
+		// },
 		created(){
 			// // 确认web.entry.js中的this.$moment对象是否正确传入
 			// console.log(this.$moment);
 		},
 		computed: {
+			month() {
+				return this.$store.state.currentMonth;
+			},
+			year() {
+				return this.$store.state.currentYear;
+			},
 			// padding days according to Year-Month
 			// 根据年月获取当月日历中显示的日期（涵盖上月或下月的日期，补全MONDAY～SUNDAY
 			days() {
@@ -70,8 +100,11 @@
 				}
 				return weeks;
 			}
-
-
+		},
+		components: {
+			CalendarDay,
+			CurrentMonth,
+			EventForm
 		}
 	}
 </script>
