@@ -8,6 +8,7 @@
 <script>
 	export default {
 		methods: {
+			// 月份的递减
 			dec() {
 				if (this.month === 1) {
 					this.$store.commit('setCurrentMonth', 12);
@@ -18,6 +19,7 @@
 				}
 				
 			},
+			// 月份的递增
 			inc() {
 				if (this.month === 12) {
 					this.$store.commit('setCurrentMonth', 1);
