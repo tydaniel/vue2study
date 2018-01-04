@@ -9,7 +9,7 @@
 </template>
 <script>
 	export default {
-		props: [ 'day' ],
+		props: [ "day" ],
 		computed: {
 			// 获取各日期对应的描述
 			events() {
@@ -23,25 +23,25 @@
 				return this.$store.state.events.filter(event => event.date.isSame(this.day, 'day'));
 			},
 			classObject() {
+				let eventFormDate = this.$store.state.eventFormDate;
+				let eventFormActive = this.$store.state.eventFormActive;
 				let today = this.day.isSame(this.$moment(), 'day');
 				return {
 					day: true,
 					// today: this.day.isSame(this.$moment(), 'day'),
-					today,
+					 today,
 					// past: this.day.isSameOrBefore(this.$moment(), 'day')
-					past: this.day.isBefore(this.$moment(), 'day')
+					past: this.day.isBefore(this.$moment(), 'day'),
+					active: eventFormDate.isSame(this.day, 'day') && eventFormActive
 				};
 			}
 		},
 		methods: {
 			captureClick(event) {
-				console.log('!!!!!!');
-				console.log(this.day);
-				this.$store.commit('eventFormPos',{x: event.clientX, y: event.clientY});
-				this.$store.commit('eventFormActive', true);
 				// 获取click对象的日期
 				this.$store.commit('addEventFormDate', this.day);
-
+				this.$store.commit('eventFormPos',{x: event.clientX, y: event.clientY});
+				this.$store.commit('eventFormActive', true);
 			}
 		}
 	}	

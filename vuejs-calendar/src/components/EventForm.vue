@@ -1,7 +1,7 @@
 <template>
 	<div id="event-form" :class="{ active: active }" :style="{ top: top, left: left }"> 
 		<h4>Add an event</h4>
-		<p>{{ date }}</p>
+		<p v-if="active">{{ date.format('dddd, MMMM Do') }}</p>
 		<div class="text">
 			<input v-focus type="text" v-model="description" placeholder="Please input your event here!" @keyup.enter="create">
 		</div>
@@ -20,7 +20,7 @@
 		},
 		computed: {
 			date() {
-				return `${this.$store.state.eventFormDate}`;
+				return this.$store.state.eventFormDate;
 			},
 			top() {
 				return `${this.$store.state.eventFormPosY}px`;
@@ -39,16 +39,18 @@
 			},
 			create(){
 				if( this.description.length > 0) {
-					this.$store.commit('addEvent', this.description);
-					this.description = '';
-					this.$store.commit('eventFormActive', false);
+					// 执行actions--addEvent 然后通过.then等待执行结果后再更新关闭Form
+					this.$store.dispatch('addEvent', this.description).then(_ =>{
+						// this.$store.commit('addEvent', this.description);
+						this.description = '';
+						this.$store.commit('eventFormActive', false);	
+					});					
 				}
 			}
 		},
 		directives: {
 			focus: {
 				update(el) {
-					console.debug('focus update!');
 					el.focus();
 				}
 			}
