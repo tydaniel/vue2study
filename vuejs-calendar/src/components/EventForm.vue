@@ -42,6 +42,7 @@
 					// 执行actions--addEvent 然后通过.then等待执行结果后再更新关闭Form
 					this.$store.dispatch('addEvent', this.description).then(_ =>{
 						// this.$store.commit('addEvent', this.description);
+						// 清空description, 并讲form的display关闭
 						this.description = '';
 						this.$store.commit('eventFormActive', false);	
 					});					
