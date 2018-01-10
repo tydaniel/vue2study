@@ -8,6 +8,7 @@ const showToast = function(state, commit, payload) {
 
 export default {
   getArticles: ({commit}) => {
+    console.log("Vuex Actions ******* getArticles");
     commit('SET_LOADING');
     return Vue.http.get('/api/getArticles').then((res) => {
       console.log(res.data);

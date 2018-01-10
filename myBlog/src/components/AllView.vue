@@ -13,7 +13,7 @@
         <div v-for="article in classified.articlesInyear[item]" class="article-item">
           <p class="date">{{article.date.substring(0, 10)}}</p>
           <router-link :to="{name: 'article', query: {id: article._id}}" class="title">
-            <p @click="getArticle">{{article.title}}</p>
+            <p @click="getArticles">{{article.title}}</p>
           </router-link>
         </div>
       </div>
